@@ -81,6 +81,10 @@ val enum_option :
   Pb_option.t ->
   Pt.enum_body_content
 
+val enum_reserved :
+  Pt.extension_range list ->
+  Pt.enum_body_content
+
 val enum :
   ?enum_body:Pt.enum_body_content list ->
   string ->
@@ -89,6 +93,8 @@ val enum :
 val extension_range_single_number : int -> Pt.extension_range
 
 val extension_range_range : int -> [ `Max | `Number of int ] -> Pt.extension_range
+
+val extension_range_string : string -> Pt.extension_range
 
 val message_body_sub :
   Pt.message ->

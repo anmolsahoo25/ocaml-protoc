@@ -264,6 +264,7 @@ extension_range :
   | T_int { Pb_parsing_util.extension_range_single_number $1}
   | T_int T_to T_int { Pb_parsing_util.extension_range_range $1 (`Number $3) }
   | T_int T_to T_max { Pb_parsing_util.extension_range_range $1 `Max }
+  | T_string { Pb_parsing_util.extension_range_string $1 }
 
 oneof :
   | T_one_of field_name T_lbrace oneof_field_list rbrace {
@@ -386,6 +387,7 @@ enum_values:
 enum_body_content :
   | option     { Pb_parsing_util.enum_option $1 }
   | enum_value { $1 }
+  | reserved   { Pb_parsing_util.enum_reserved $1 }
 
 enum_value :
   | T_ident T_equal T_int semicolon  { Pb_parsing_util.enum_value ~int_value:$3 (snd $1) }

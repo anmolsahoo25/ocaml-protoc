@@ -73,21 +73,6 @@ type oneof = {
   oneof_fields : oneof_field list;
 }
 
-type enum_value = {
-  enum_value_name : string;
-  enum_value_int : int;
-}
-
-type enum_body_content =
-  | Enum_value of enum_value
-  | Enum_option of Pb_option.t
-
-type enum = {
-  enum_id  : int;
-  enum_name : string;
-  enum_body : enum_body_content list;
-} 
-
 type extension_range_to = 
   | To_max 
   | To_number of int
@@ -97,6 +82,23 @@ type extension_range_from = int
 type extension_range = 
   | Extension_single_number of int 
   | Extension_range of extension_range_from * extension_range_to
+  | Extension_string of string
+
+type enum_value = {
+  enum_value_name : string;
+  enum_value_int : int;
+}
+
+type enum_body_content =
+  | Enum_value of enum_value
+  | Enum_option of Pb_option.t
+  | Enum_reserved of extension_range list
+
+type enum = {
+  enum_id  : int;
+  enum_name : string;
+  enum_body : enum_body_content list;
+} 
 
 (** Body content defines all the possible consituant 
     of a message. 

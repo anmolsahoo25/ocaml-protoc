@@ -81,6 +81,8 @@ let enum_value ~int_value name = Pt.(Enum_value {
 
 let enum_option option_ = Pt.Enum_option option_
 
+let enum_reserved extension_range_list = Pt.Enum_reserved extension_range_list
+
 let enum ?enum_body:(enum_body= []) enum_name =
   incr message_counter;
   {
@@ -98,6 +100,9 @@ let extension_range_range from to_ =
     | `Number i -> Pt.To_number i
   in
   Pt.Extension_range (from, to_)
+
+let extension_range_string string =
+  Pt.Extension_string string
 
 let message_body_field field =  Pt.Message_field field
 
@@ -300,6 +305,7 @@ let finalize_syntax3 proto =
         if enum_value_int != 0
         then E.invalid_first_enum_value_proto3 ?message_name ~enum_name ()
         else ()
+      | (Pt.Enum_reserved _) :: tl -> aux tl
       | [] -> assert(false)
     in
     aux enum_body
